@@ -6,7 +6,7 @@
 /*   By: mrusu <mrusu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 09:45:11 by mrusu             #+#    #+#             */
-/*   Updated: 2024/07/03 17:47:34 by mrusu            ###   ########.fr       */
+/*   Updated: 2024/07/04 10:03:00 by mrusu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,88 +14,6 @@
 #include <unistd.h>
 #include <stdarg.h>
 #include <stdio.h>
-
-// // Write a character to stdout and increment counter
-// int	printf_write(int c, int i)
-// {
-// 	write(1, &c, 1);
-// 	return (++i);
-// }
-
-// // Handle printing of integer values
-// int	fnd_d(int d, int i)
-// {
-// 	if (d == -2147483648)
-// 	{
-// 		write(1, "-2147483648", 11);
-// 		return (i + 11);
-// 	}
-// 	else if (d < 0)
-// 	{
-// 		i = printf_write('-', i);
-// 		return (fnd_d(-d, i));
-// 	}
-// 	else if (d < 10)
-// 		return (printf_write(d + '0', i));
-// 	else
-// 	{
-// 		i = fnd_d(d / 10, i);
-// 		return (printf_write(d % 10 + '0', i));
-// 	}
-// 	return (i);
-// }
-
-// // Handle printing of strings
-// int	fnd_s(char *s, int i)
-// {
-// 	if (!s)
-// 		return (fnd_s("(null)", i));
-// 	while (*s)
-// 	{
-// 		i = printf_write(*s++, i);
-// 	}
-// 	return (i);
-// }
-
-// // Handle printing of hexadecimal values
-// int	fnd_x(unsigned int x, int i)
-// {
-// 	if (x >= 16)
-// 		i = fnd_x(x / 16, i);
-// 	if (x % 16 < 10)
-// 	{
-// 		return (printf_write(x % 16 + '0', i));
-// 	}
-// 	return (printf_write(x % 16 - 10 + 'a', i));
-// }
-
-// // main ft-like func
-// int	ft_printf(const char *format, ...)
-// {
-// 	va_list	args;
-// 	int	i = 0;
-// 	int	j = 0;
-// 	va_start(args, format);
-// 	while (format[j])
-// 	{
-// 		if (format[j] == '%')
-// 		{
-// 			j++;
-// 			if (format[j] == 's')
-// 				i = fnd_s(va_arg(args, char *), i);
-// 			else if (format[j] == 'd')
-// 				i = fnd_d(va_arg(args, int), i);
-// 			else if (format[j] == 'x')
-// 				i = fnd_x(va_arg(args, unsigned int), i);
-// 		}
-// 		else
-// 			i = printf_write(format[j], i);
-// 		j++;
-// 	}
-// 	va_end(args);
-// 	return (i);
-// }
-
 
 void	put_s(char *string, int *length)
 {

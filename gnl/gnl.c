@@ -5,60 +5,113 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrusu <mrusu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/03 09:45:16 by mrusu             #+#    #+#             */
-/*   Updated: 2024/07/03 17:51:50 by mrusu            ###   ########.fr       */
+/*   Created: 2024/07/03 17:48:19 by mrusu             #+#    #+#             */
+/*   Updated: 2024/07/04 15:42:00 by mrusu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "gnl.h"
 
-char *get_next_line(int fd)
+char	*ft_strchr(char *s, int c)
 {
-    int     byte;
-    char    c;
-    char    *str_buffer;
-    int     i;
-
-    if (BUFFER_SIZE < 1 || fd < 0)
-        return (NULL);
-    i = 0;
-    str_buffer = (char *)malloc(10000000);
-    if (!str_buffer)
-        return (NULL);
-    byte = read(fd, &c, 1); // each every one character from txt file
-    while (byte > 0)
-    {
-        str_buffer[i] = c;
-        i++;
-        if(c == '\n' || c == EOF)
-            break ;
-        byte = read(fd, &c, 1); // each every one character from txt file
-    }
-    // no more char OR error happens
-    if (i == 0 || byte < 0)
-    {
-        free(str_buffer);
-        return (NULL);
-    }
-    str_buffer[i] = '\0';
-    return (str_buffer);
+	while (*s)
+	{
+		if (*s == (char)c)
+			return ((char *)s);
+		s++;
+	}
+	return (NULL);
 }
 
-int main(void)
+size_t	ft_strlen(const char *s)
 {
-    int     fd;
-    char    *str;
-    char    *path;
-    int     i;
+	size_t	i = 0;
 
-    path = "test.txt";
-    fd = open(path, O_RDONLY);
-    i = 0;
-    while(i < 10) // number of loop (test)
-    {
-        str = get_next_line(fd);
-        printf("%s\n", str);
-        i++;
-    }
-    return (0);
+	while (s[i])
+		i++;
+	return (i);
+}
+
+void	ft_strcpy(char *dst, const char *src)
+{
+	while (*src)	
+		*dst++ = *src++;
+	*dst = '\0';
+}
+
+char	*ft_strdup(const char *src)
+{
+	size_t	len = ft_strlen(src);
+	char	*dst = malloc(len + 1);
+
+	if (dst == NULL)
+		return (NULL);
+	ft_strcpy(dst, src);
+	return (dst);
+}
+
+char	*ft_strjoin(char *s1, char const *s2)
+{
+	size_t	s1_len = ft_strlen(s1);
+	size_t	s2_len = ft_strlen(s2);
+	char	*join = malloc((s1_len + s2_len + 1));
+
+	if (!s1 || !s2 || !join)
+		return (NULL);
+	ft_strcpy(join, s1);
+	ft_strcpy((join + s1_len), s2);
+	free(s1);
+	return (join);
+}
+
+char	*get_next_line(int fd)
+{
+	static char	buf[BUFFER_SIZE + 1];
+	char		*line = ft_strdup(buf);
+	char		*newline;
+	int			countread;
+	int			to_copy;
+
+	if (!line)
+		return (NULL);
+    while (!(newline = ft_strchr(line, '\n')) && (countread = read(fd, buf, BUFFER_SIZE)) > 0) 
+	{
+		buf[countread] = '\0';
+		line = ft_strjoin(line, buf);
+		if(!line)
+			return NULL;
+	}
+	if (ft_strlen(line) == 0)
+		return (free(line), NULL);
+	if (newline != NULL)
+	{
+		to_copy = newline - line + 1;
+		ft_strcpy(buf, newline + 1);
+	}
+	else
+	{
+		to_copy = ft_strlen(line);
+		buf[0] = '\0';
+	}
+	line[to_copy] = '\0';
+	return (line);
+}
+
+int	main(void)
+{
+	int     fd;
+	char    *str;
+	char    *path;
+	int     i;
+
+	path = "test.txt";
+	fd = open(path, O_RDONLY);
+	i = -1;
+	while(++i < 6)
+	{
+		str = get_next_line(fd);
+		printf("%s\n", str);
+	}
+	return (0);
 }
