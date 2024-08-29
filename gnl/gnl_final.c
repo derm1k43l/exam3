@@ -2,7 +2,7 @@
 
 char *schr(char *s, int c)
 {
-	if(!s)
+	if (!s)
 		return NULL;
 	while (*s)
 	{
@@ -10,16 +10,16 @@ char *schr(char *s, int c)
 			return (s);
 		s++;
 	}
-	return NULL;
+	return (NULL);
 }
 size_t slen(char *s)
 {
 	if(!s)
-		return 0;
+		return (0);
 	size_t l = 0;
 	while (s[l])
 		l++;
-	return l;
+	return (l);
 }
 void scpy(char *d, char *s)
 {
@@ -32,28 +32,28 @@ void scpy(char *d, char *s)
 char *sdup(char *s)
 {
 	if(!s)
-		return NULL;
+		return (NULL);
 	size_t l = slen(s);
 	char *d = malloc(l+1);
 	if(!d)
-		return NULL;
+		return (NULL);
 	scpy(d, s);
 	return d;
 }
 char *sjoin(char *s1, char* s2)
 {
 	if(!s1 || !s2)
-		return NULL;
+		return (NULL);
 	size_t l1 = slen(s1);
 	size_t l2 = slen(s2);
 	char *j = malloc(l1+l2+1);
 	if(!j)
-		return NULL;
+		return (NULL);
 	scpy(j,s1);
 	scpy(j+slen(s1), s2);
 	if(s1)
 		free(s1);
-	return j;
+	return (j);
 }
 
 char *get_next_line(int fd)
@@ -65,7 +65,7 @@ char *get_next_line(int fd)
 
 	line=sdup(buff);
 	if(!line)
-		return NULL;
+		return (NULL);
 	while(!(nline=schr(line, '\n')) && (br=read(fd,buff,BUFFER_SIZE)))
 	{
 		buff[br]='\0';
@@ -80,7 +80,7 @@ char *get_next_line(int fd)
 	}
 	else
 		buff[0] = '\0';
-	return line;
+	return (line);
 }
 
 
